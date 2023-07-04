@@ -7,3 +7,11 @@
 ### 1. 界面
 
 ![](./images/InterfaceManager.png)
+
+### 2. 注意事项
+
+**请使用管理员权限运行！！！**
+
+可以预先对 InterfaceManager.exe 进行设置，如图所示，每次运行时将询问管理员权限。
+
+![](./images/Admin.png)
