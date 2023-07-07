@@ -7,6 +7,8 @@
 #include <QStringList>
 #include <QList>
 #include <string.h>
+#include <QSystemTrayIcon>
+
 
 struct Interface {
     bool        dhcp;
@@ -82,8 +84,15 @@ private slots:
 
     void on_btn_apply_all_clicked();
 
+    void tray_clicked(QSystemTrayIcon::ActivationReason);
+
+
+protected:
+    void changeEvent(QEvent *event);
+
 private:
     Ui::InterfaceManager *ui;
     QList<struct Interface> interfaceList;
+    QSystemTrayIcon* tray;
 };
 #endif // INTERFACEMANAGER_H

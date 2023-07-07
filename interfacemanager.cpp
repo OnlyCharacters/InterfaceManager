@@ -87,6 +87,12 @@ InterfaceManager::InterfaceManager(QWidget *parent)
     , ui(new Ui::InterfaceManager)
 {
     ui->setupUi(this);
+
+    tray = new QSystemTrayIcon(this);
+    tray->setIcon(QIcon("./icons8-internet-16_1.png"));
+    connect(tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(tray_clicked(QSystemTrayIcon::ActivationReason)));
+    tray->show();
+
     getInterfaceList();
     foreach(struct Interface interface, interfaceList) {
         this->ui->interface_list->addItem(interface.name);
@@ -444,3 +450,43 @@ void InterfaceManager::on_btn_apply_all_clicked()
     }
 }
 
+void InterfaceManager::tray_clicked(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::ActivationReason::Trigger:
+        this->showNormal();
+        this->activateWindow();
+        break;
+    case QSystemTrayIcon::ActivationReason::DoubleClick:
+        this->showNormal();
+        this->activateWindow();
+        break;
+    case QSystemTrayIcon::ActivationReason::MiddleClick:
+        this->showNormal();
+        this->activateWindow();
+        break;
+    case QSystemTrayIcon::ActivationReason::Context:
+        this->showNormal();
+        this->activateWindow();
+        break;
+    case QSystemTrayIcon::ActivationReason::Unknown:
+        break;
+    default:
+        break;
+    }
+}
+
+void InterfaceManager::changeEvent(QEvent* e)
+{
+    switch (e->type()) {
+    case QEvent::WindowStateChange:
+        if (this->windowState() == Qt::WindowMinimized) {
+            this->hide();
+        }
+        break;
+    default:
+        break;
+    }
+
+    QWidget::changeEvent(e);
+}
